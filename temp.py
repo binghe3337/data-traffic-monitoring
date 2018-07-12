@@ -10,7 +10,6 @@ for line in fd.readlines():
         print line.replace(' ', '')
     if line.find("eth0") > 0:
         netcardstatus = True
-        field = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         field = line.split()
         print 'field[0]'
         print field[0]
