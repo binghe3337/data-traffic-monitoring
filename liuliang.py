@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #coding=utf-8
 import sys,re,time,os
-maxdata = 1649267441664 #Byte
+maxdata = 1649267441664 #流量上限，包括流入和流出，单位Byte
 memfilename = '/root/newnetcardtransdata.txt'
 netcard = '/proc/net/dev'
 def checkfile(filename):
@@ -20,8 +20,8 @@ def get_net_data():
             netcardstatus = True
             field = line.split()
             recv = field[0].split(":")[1]
-            recv = recv or field[1]
-            send = field[9]
+            recv = recv or field[1] #运行check.py，确定方括号中的数值
+            send = field[9] #运行check.py，确定方括号中的数值
     if not netcardstatus:
         fd.close()
         print 'Please setup your netcard'
@@ -40,7 +40,7 @@ def net_loop():
         time.sleep(3)
         nowtime = time.strftime('%d %H:%M',time.localtime(time.time()))
         sec = time.localtime().tm_sec
-        if nowtime == '01 00:00':
+        if nowtime == '01 00:00': #流量更新时间，默认为每月1日00:00
             if sec < 10:
                 totaltrans = 0
         (new_recv, new_send) = get_net_data()
@@ -56,6 +56,6 @@ def net_loop():
         memw.write(str(totaltrans))
         memw.close()
         if totaltrans >= maxdata:
-            os.system('rm -f /root/newnetcardtransdata.txt && init 0')
+            os.system('rm -f /root/newnetcardtransdata.txt && init 0') #前半段不要删除，后半段可以修改为其他命令
 if __name__ == "__main__":
     net_loop()
