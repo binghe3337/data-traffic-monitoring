@@ -7,7 +7,7 @@ fd = open(nc, "r")
 netcardstatus = False
 for line in fd.readlines():
     if line.upper().find("RECEIVE") > 0:
-        print line
+        print line.replace(' ', '')
     if line.find("eth0") > 0:
         netcardstatus = True
         field = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
